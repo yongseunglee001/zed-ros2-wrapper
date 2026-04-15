@@ -83,7 +83,7 @@
             publish_roi_mask: false # Advertise the ROI mask image topic that is published only if a node subscribes to it
 
         depth:
-            depth_mode: 'ULTRA' # ZED SDK 5.2 needs TensorRT 10.13 for NEURAL_LIGHT, but system has 10.16 (mismatch). ULTRA = no TensorRT needed.
+            depth_mode: 'NEURAL_LIGHT' # TensorRT 10.13.2 IS installed at /usr/local/cuda-13.x/lib + ZED models (neural_depth_light_5.2.model, neural_depth_5.3.model) are present under /usr/local/zed/resources/. NEURAL_LIGHT runs on GPU via TensorRT and is significantly faster + higher quality than ULTRA (block-matching CPU fallback). ULTRA was a misdiagnosis (commented "TRT 10.16 mismatch" was wrong — system has 10.13.2 which matches). Options: 'NEURAL' (best quality, heaviest) | 'NEURAL_LIGHT' (recommended on RTX-class GPUs) | 'ULTRA' (only if TensorRT is actually missing).
             depth_stabilization: -1 # Negative value takes SDK default, 0 is disabled - Range: [0,100]
             openni_depth_mode: false # 'false': 32bit float [meters], 'true': 16bit unsigned int [millimeters]
             point_cloud_freq: 10.0 # [DYNAMIC] Frequency of the pointcloud publishing. This value must be <= the camera framerate. Set to 0 for no limit (= grab_frame_rate).
