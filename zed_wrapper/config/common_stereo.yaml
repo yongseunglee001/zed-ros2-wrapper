@@ -52,7 +52,7 @@
             publish_left_right: false # Advertise the left and right image topics that are published only if a node subscribes to them
             publish_raw: false # Advertise the raw image topics that are published only if a node subscribes to them
             publish_gray: false # Advertise the gray image topics that are published only if a node subscribes to them
-            publish_stereo: false # Advertise the stereo image topic that is published only if a node subscribes to it
+            publish_stereo: true # Advertise the stereo image topic that is published only if a node subscribes to it
             # Other parameters are defined, according to the camera model, in the 'zed.yaml', 'zedm.yaml', 'zed2.yaml', 'zed2i.yaml'
             # 'zedx.yaml', 'zedxmini.yaml', 'virtual.yaml' files
 
@@ -103,11 +103,11 @@
             pos_tracking_enabled: true # True to enable positional tracking from start
             pos_tracking_mode: 'AUTO' # 'AUTO' uses the SDK default; also supports 'GEN_1', 'GEN_3'
             imu_fusion: true # enable/disable IMU fusion. When set to false, only the optical odometry will be used.
-            publish_tf: true # [overwritten by launch file options] publish `odom -> camera_link` TF
-            publish_map_tf: true # [overwritten by launch file options] publish `map -> odom` TF
+            publish_tf: false # robot_localization EKF (tyranno_bringup/config/ekf.yaml) is the sole odom→base_link TF source — ZED just feeds its visual odom on /zed/zed_node/odom
+            publish_map_tf: false # Nav2 AMCL publishes map→odom — ZED must not compete
             map_frame: 'map'
             odometry_frame: 'odom'
-            area_memory: true # Enable to detect loop closure
+            area_memory: false # Loop closure disabled — EKF handles pose fusion; area_memory adds init latency and filesystem state we don't need
             area_file_path: '' # Path to the area memory file for relocalization and loop closure in a previously explored environment. 
             enable_localization_only: false # If true, the camera will only localize in the loaded area memory without updating the map with new information.
             save_area_memory_on_closing: false # Save Area memory before closing the camera if `area_file_path` is not empty. You can also use the `save_area_memory` service to save the area memory at any time.
